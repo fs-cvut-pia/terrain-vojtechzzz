@@ -1,5 +1,7 @@
 #include "TerrainMap.h"
 #include "Path.h"
+#include "Letadlo.h"
+#include "Lod.h"
 #include <vector>
 #include <iostream>
 #include <string>
@@ -33,9 +35,20 @@ int main(int argc, char *argv[]) {
     Point start = read_coordinates(argc,argv,2);
     Point finish = read_coordinates(argc,argv,4);
 
-    std::vector<Path*> paths = { //new YourPath(m,"MyPathName",start,finish), ...
+    //Point p = start + Point (0,1);
+
+    //std:cout << p.x << " " << p.y << std:endl;
+
+    //Matrix<double> A(256,256);
+
+    //A(25,25) =45.6; //nevim more co to dela
+
+
+    std::vector<Path*> paths = { new Letadlo(m,"Letadlo",start,finish),
+        new Lod(m,"Lod",start,finish)
         // Here add the list of dynamically created classes with path finding algorithms
     };
+
 
     for (auto& p : paths) {
         std::cout << "Path search: " << p->getName() << std::endl;
@@ -46,6 +59,6 @@ int main(int argc, char *argv[]) {
         p->saveToFile();
         delete p;
     }
-
-    return 0;
+return 0;
 }
+

@@ -18,7 +18,8 @@ struct Point {
     bool operator== (Point const& v) const { return x == v.x && y == v.y; };
     Point operator+ (Point const& v) const { return Point(x+v.x,y+v.y); };
     Point operator- (Point const& v) const { return Point(x-v.x,y-v.y); };
-    bool operator<  (Point const& v) const { return x + y*nx_max; }; // This is to provide a simple ordering, the operator doesn't have a geometrical meaning
+    bool operator<  (Point const& v) const { return x + y*nx_max < v.x + v.y * nx_max; ; };
+    bool operator>  (Point const& v) const { return x + y*nx_max > v.x + v.y * nx_max; };// This is to provide a simple ordering, the operator doesn't have a geometrical meaning
     double length() const { return std::sqrt(x*x + y*y); }
 };
 
@@ -28,7 +29,7 @@ struct Point {
 template<typename T>
 class Matrix {
 public:
-    Matrix(int n, int m) : nx(n), ny(m), data(n*m) {};
+    Matrix(int n, int m, T default_value = T()) : nx(n), ny(m), data(n * m, default_value) {};
     void zero() { for (T& i : data) i = 0; };
     T operator() (int i, int j) const { return data[i+nx*j]; };
     T& operator() (int i, int j) { return data[i+nx*j]; };
